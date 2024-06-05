@@ -85,18 +85,6 @@ export default (database) => {
         },
       ],
       tenants: [TenantUserSchema],
-      lessons: [
-        {
-          type: Schema.Types.ObjectId,
-          ref: 'lesson',
-        },
-      ],
-      payments: [
-        {
-          type: Schema.Types.ObjectId,
-          ref: 'payment',
-        },
-      ],
       jwtTokenInvalidBefore: { type: Date },
       createdBy: {
         type: Schema.Types.ObjectId,

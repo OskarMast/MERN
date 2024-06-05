@@ -84,20 +84,8 @@ require('./plan').default(routes);
 require('./tenant').default(routes);
 require('./file').default(routes);
 require('./user').default(routes);
-require('./attendance').default(routes);
 require('./settings').default(routes);
-require('./grade').default(routes);
-require('./skill').default(routes);
-require('./pool').default(routes);
-require('./class').default(routes);
-require('./lesson').default(routes);
-require('./classCategory').default(routes);
-require('./payment').default(routes);
-require('./paymentCategory').default(routes);
-require('./paymentMethod').default(routes);
 require('./registration').default(routes);
-require('./document').default(routes);
-require('./widget').default(routes);
 
 // Loads the Tenant if the :tenantId param is passed
 routes.param('tenantId', tenantMiddleware);

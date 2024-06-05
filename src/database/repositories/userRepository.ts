@@ -11,8 +11,6 @@ import MongooseRepository from './mongooseRepository';
 import MuiRepository from './muiRepository';
 import SettingsRepository from './settingsRepository';
 import User from '../models/user';
-import Lesson from '../models/lesson';
-import moment from 'moment';
 import 'core-js/actual/array/group-by';
 
 export default class UserRepository {
@@ -30,7 +28,6 @@ export default class UserRepository {
           lastName: data.lastName || null,
           fullName: data.fullName || null,
           phoneNumber: data.phoneNumber || null,
-          studentNumber: data.studentNumber || null,
           importHash: data.importHash || null,
           avatars: data.avatars || [],
           street: data.street || null,
@@ -88,7 +85,6 @@ export default class UserRepository {
           lastName: data.lastName || null,
           fullName: data.fullName || null,
           phoneNumber: data.phoneNumber || null,
-          studentNumber: data.studentNumber || null,
           importHash: data.importHash || null,
           avatars: data.avatars || [],
           street: data.street || null,
@@ -335,38 +331,6 @@ export default class UserRepository {
     return user;
   }
 
-  static async registerLessons(
-    id,
-    data,
-    options: IRepositoryOptions,
-  ) {
-    const currentUser =
-      MongooseRepository.getCurrentUser(options);
-
-    await User(options.database).updateOne(
-      { _id: id },
-      {
-        ...data,
-        updatedBy: currentUser.id,
-      },
-      options,
-    );
-
-    const user = await this.findById(id, options);
-
-    await AuditLogRepository.log(
-      {
-        entityName: 'user',
-        entityId: id,
-        action: AuditLogRepository.UPDATE,
-        values: user,
-      },
-      options,
-    );
-
-    return user;
-  }
-
   static async findByEmail(
     email,
     options: IRepositoryOptions,
@@ -407,12 +371,6 @@ export default class UserRepository {
               path: 'paymentMethod',
             },
           ],
-        })
-        .populate({
-          path: 'lessons',
-          populate: {
-            path: 'class',
-          },
         }),
       options,
     );
@@ -434,18 +392,7 @@ export default class UserRepository {
           $elemMatch: {
             tenant: currentTenant.id,
             roles: {
-              $elemMatch: { $in: ['admin', 'manager'] },
-            },
-          },
-        },
-      });
-    } else if (role === 'teacher') {
-      criteriaAnd.push({
-        tenants: {
-          $elemMatch: {
-            tenant: currentTenant.id,
-            roles: {
-              $elemMatch: { $in: ['teacher'] },
+              $elemMatch: { $in: ['admin', 'user'] },
             },
           },
         },
@@ -456,7 +403,7 @@ export default class UserRepository {
           $elemMatch: {
             tenant: currentTenant.id,
             roles: {
-              $elemMatch: { $in: ['student'] },
+              $elemMatch: { $in: ['user'] },
             },
           },
         },
@@ -467,12 +414,6 @@ export default class UserRepository {
       if (filter.id) {
         criteriaAnd.push({
           ['_id']: MongooseQueryUtils.uuid(filter.id),
-        });
-      }
-
-      if (filter.studentNumber) {
-        criteriaAnd.push({
-          ['studentNumber']: filter.studentNumber,
         });
       }
 
@@ -491,14 +432,6 @@ export default class UserRepository {
       if (filter.phoneNumber) {
         criteriaAnd.push({
           ['phoneNumber']: filter.phoneNumber,
-        });
-      }
-
-      if (filter.lessons) {
-        criteriaAnd.push({
-          ['lessons']: {
-            $in: filter.lessons,
-          },
         });
       }
 
@@ -596,12 +529,6 @@ export default class UserRepository {
                 path: 'paymentMethod',
               },
             ],
-          })
-          .populate({
-            path: 'lessons',
-            populate: {
-              path: 'class',
-            },
           }),
         options,
       );
@@ -651,24 +578,13 @@ export default class UserRepository {
           },
         },
       });
-    } else if (role === 'teacher') {
-      criteriaAnd.push({
-        tenants: {
-          $elemMatch: {
-            tenant: currentTenant.id,
-            roles: {
-              $elemMatch: { $in: ['teacher'] },
-            },
-          },
-        },
-      });
     } else {
       criteriaAnd.push({
         tenants: {
           $elemMatch: {
             tenant: currentTenant.id,
             roles: {
-              $elemMatch: { $in: ['student'] },
+              $elemMatch: { $in: ['user'] },
             },
           },
         },
@@ -722,12 +638,6 @@ export default class UserRepository {
                 path: 'paymentMethod',
               },
             ],
-          })
-          .populate({
-            path: 'lessons',
-            populate: {
-              path: 'class',
-            },
           }),
         options,
       );
@@ -809,12 +719,6 @@ export default class UserRepository {
           populate: {
             path: ['category', 'paymentMethod'],
           },
-        })
-        .populate({
-          path: 'lessons',
-          populate: {
-            path: 'class',
-          },
         }),
       options,
     );
@@ -839,26 +743,6 @@ export default class UserRepository {
               },
               {
                 path: 'paymentMethod',
-              },
-            ],
-          })
-          .populate({
-            path: 'attendances.lesson',
-            populate: {
-              path: 'class',
-            },
-          })
-          .populate({
-            path: 'lessons',
-            populate: [
-              {
-                path: 'class',
-                populate: {
-                  path: 'pool',
-                },
-              },
-              {
-                path: 'teacher',
               },
             ],
           }),
@@ -890,78 +774,6 @@ export default class UserRepository {
     );
 
     return record;
-  }
-
-  static async findTeacherById(
-    id,
-    options: IRepositoryOptions,
-    metaOnly = false,
-  ) {
-    let user =
-      await MongooseRepository.wrapWithSessionIfExists(
-        User(options.database)
-          .findById(id)
-          .populate('avatars')
-          .populate('tenants.tenant'),
-        options,
-      );
-
-    let lessons =
-      await MongooseRepository.wrapWithSessionIfExists(
-        Lesson(options.database)
-          .find({ teacher: id })
-          .populate('class'),
-        options,
-      );
-
-    if (lessons.length !== 0) {
-      let groupByClass = lessons.groupBy((lesson) => {
-        return lesson.class.name;
-      });
-
-      groupByClass = Object.entries(groupByClass);
-
-      lessons = [];
-
-      groupByClass.map((lesson) => {
-        lesson[1].sort((a, b) => {
-          let am = moment(a.time).minutes();
-          let bm = moment(b.time).minutes();
-          let ah = moment(a.time).hours();
-          let bh = moment(b.time).hours();
-          let ad = a.day * 24 * 60 + ah * 60 + am;
-          let bd = b.day * 24 * 60 + bh * 60 + bm;
-          return ad - bd;
-        });
-        lessons.push({
-          class: lesson[0],
-          lessons: lesson[1],
-        });
-      });
-    }
-
-    if (!user) {
-      throw new Error404();
-    }
-
-    const currentTenant =
-      MongooseRepository.getCurrentTenant(options);
-
-    if (!options || !options.bypassPermissionValidation) {
-      if (!isUserInTenant(user, currentTenant.id)) {
-        throw new Error404();
-      }
-
-      user = this._mapUserForTenant(user, currentTenant);
-    }
-
-    user = await this._fillRelationsAndFileDownloadUrls(
-      user,
-      options,
-      metaOnly,
-    );
-
-    return { user, lessons };
   }
 
   static async findPassword(
