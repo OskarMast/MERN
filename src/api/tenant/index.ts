@@ -1,12 +1,4 @@
 export default (app) => {
-  app.post(
-    `/tenant/invitation/:token/accept`,
-    require('./tenantInvitationAccept').default,
-  );
-  app.delete(
-    `/tenant/invitation/:token/decline`,
-    require('./tenantInvitationDecline').default,
-  );
   app.post(`/tenant`, require('./tenantCreate').default);
   app.put(`/tenant/:id`, require('./tenantUpdate').default);
   app.delete(`/tenant`, require('./tenantDestroy').default);

@@ -1,9 +1,5 @@
 export default (app) => {
   app.post(
-    `/tenant/:tenantId/userInvite`,
-    require('./userInvite').default,
-  );
-  app.post(
     `/tenant/:tenantId/userCreate`,
     require('./userCreate').default,
   );
@@ -20,27 +16,11 @@ export default (app) => {
     require('./userDestroy').default,
   );
   app.get(
-    `/tenant/:tenantId/admin`,
-    require('./adminList').default,
-  );
-  app.get(
-    `/tenant/:tenantId/teacher`,
-    require('./teacherList').default,
-  );
-  app.get(
-    `/tenant/:tenantId/student`,
-    require('./studentList').default,
-  );
-  app.get(
     `/tenant/:tenantId/user/autocomplete`,
     require('./userAutocomplete').default,
   );
   app.get(
     `/tenant/:tenantId/user/:id`,
     require('./userFind').default,
-  );
-  app.get(
-    `/tenant/:tenantId/teacher/:id`,
-    require('./teacherFind').default,
   );
 };

@@ -12,7 +12,6 @@ import MongooseRepository from './mongooseRepository';
 import MuiRepository from './muiRepository';
 import SettingsRepository from './settingsRepository';
 import User from '../models/user';
-
 export default class UserRepository {
   static async create(data, options: IRepositoryOptions) {
     const currentUser =
@@ -359,19 +358,7 @@ export default class UserRepository {
             $options: 'i',
           },
         })
-        .populate('avatars')
-        .populate('tenants.tenant')
-        .populate({
-          path: 'payments',
-          populate: [
-            {
-              path: 'category',
-            },
-            {
-              path: 'paymentMethod',
-            },
-          ],
-        }),
+        .populate('avatars'),
       options,
     );
   }
@@ -517,19 +504,7 @@ export default class UserRepository {
           .skip(skip)
           .limit(limitEscaped)
           .sort(sort)
-          .populate('avatars')
-          .populate('tenants.tenant')
-          .populate({
-            path: 'payments',
-            populate: [
-              {
-                path: 'category',
-              },
-              {
-                path: 'paymentMethod',
-              },
-            ],
-          }),
+          .populate('avatars'),
         options,
       );
 
@@ -626,19 +601,7 @@ export default class UserRepository {
           .find(criteria)
           .limit(limitEscaped)
           .sort(sort)
-          .populate('avatars')
-          .populate('tenants.tenant')
-          .populate({
-            path: 'payments',
-            populate: [
-              {
-                path: 'category',
-              },
-              {
-                path: 'paymentMethod',
-              },
-            ],
-          }),
+          .populate('avatars'),
         options,
       );
 
@@ -712,14 +675,7 @@ export default class UserRepository {
     return await MongooseRepository.wrapWithSessionIfExists(
       User(options.database)
         .findById(id)
-        .populate('avatars')
-        .populate('tenants.tenant')
-        .populate({
-          path: 'payments',
-          populate: {
-            path: ['category', 'paymentMethod'],
-          },
-        }),
+        .populate('avatars'),
       options,
     );
   }
@@ -733,19 +689,7 @@ export default class UserRepository {
       await MongooseRepository.wrapWithSessionIfExists(
         User(options.database)
           .findById(id)
-          .populate('avatars')
-          .populate('tenants.tenant')
-          .populate({
-            path: 'payments',
-            populate: [
-              {
-                path: 'category',
-              },
-              {
-                path: 'paymentMethod',
-              },
-            ],
-          }),
+          .populate('avatars'),
         options,
       );
 

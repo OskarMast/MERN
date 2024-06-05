@@ -83,7 +83,11 @@ export default (database) => {
           ref: 'file',
         },
       ],
-      roles: [{ type: String, maxlength: 255 }],
+      roles: {
+        type: String,
+        maxlength: 255,
+        default: 'user',
+      },
       jwtTokenInvalidBefore: { type: Date },
       createdBy: {
         type: Schema.Types.ObjectId,

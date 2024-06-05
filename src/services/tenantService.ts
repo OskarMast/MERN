@@ -24,52 +24,6 @@ export default class TenantService {
    * If default roles are empty, the admin will have to asign the roles
    * to new users.
    */
-  async createOrJoinDefault({ roles }, session) {
-    const tenant = await TenantRepository.findDefault({
-      ...this.options,
-      session,
-    });
-
-    if (tenant) {
-      // Reload the current user in case it has chenged
-      // in the middle of this session
-      const currentUserReloaded =
-        await UserRepository.findById(
-          this.options.currentUser.id,
-          {
-            ...this.options,
-            bypassPermissionValidation: true,
-            session,
-          },
-        );
-
-      const tenantUser = currentUserReloaded.tenants.find(
-        (userTenant) => {
-          return userTenant.tenant.id === tenant.id;
-        },
-      );
-
-      // In this situation, the user has used the invitation token
-      // and it is already part of the tenant
-      if (tenantUser) {
-        return;
-      }
-    }
-
-    let record = await TenantRepository.create(
-      { name: 'default', url: 'default' },
-      {
-        ...this.options,
-        session,
-      },
-    );
-
-    await SettingsService.findOrCreateDefault({
-      ...this.options,
-      currentTenant: record,
-      session,
-    });
-  }
 
   async joinWithDefaultRolesOrAskApproval(
     { roles, tenantId },

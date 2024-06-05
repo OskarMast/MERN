@@ -1,15 +1,15 @@
-import UserRepository from '../../database/repositories/userRepository';
-import Error400 from '../../errors/Error400';
+import { getConfig } from '../../config';
+import { tenantSubdomain } from '../tenantSubdomain';
 import bcrypt from 'bcrypt';
 import EmailSender from '../../services/emailSender';
-import jwt from 'jsonwebtoken';
-import MongooseRepository from '../../database/repositories/mongooseRepository';
-import { getConfig } from '../../config';
-import TenantService from '../tenantService';
-import TenantRepository from '../../database/repositories/tenantRepository';
-import { tenantSubdomain } from '../tenantSubdomain';
+import Error400 from '../../errors/Error400';
 import Error401 from '../../errors/Error401';
+import jwt from 'jsonwebtoken';
 import moment from 'moment';
+import MongooseRepository from '../../database/repositories/mongooseRepository';
+import TenantRepository from '../../database/repositories/tenantRepository';
+import TenantService from '../tenantService';
+import UserRepository from '../../database/repositories/userRepository';
 
 const BCRYPT_SALT_ROUNDS = 12;
 
@@ -288,18 +288,6 @@ class AuthService {
         ...options,
         currentUser,
       }).joinDefaultUsingInvitedEmail(options.session);
-
-      // Creates or join default Tenant
-      await new TenantService({
-        ...options,
-        currentUser,
-      }).createOrJoinDefault(
-        {
-          // leave empty to require admin's approval
-          roles,
-        },
-        options.session,
-      );
     }
   }
 
