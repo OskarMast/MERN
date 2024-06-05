@@ -62,10 +62,6 @@ function PrivateRoute({
           }
         }
 
-        if (!permissionChecker.match(permissionRequired)) {
-          return <Redirect to="/403" />;
-        }
-
         if (rest.redirect) {
           return <Redirect to={rest.redirect} />;
         }

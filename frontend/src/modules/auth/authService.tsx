@@ -36,18 +36,13 @@ export default class AuthService {
     email,
     password,
   ) {
-    const invitationToken = AuthInvitationToken.get();
-
     const response = await authAxios.post('/auth/sign-up', {
       email,
       password,
-      invitationToken,
       tenantId: tenantSubdomain.isSubdomain
         ? AuthCurrentTenant.get()
         : undefined,
     });
-
-    AuthInvitationToken.clear();
 
     return response.data;
   }

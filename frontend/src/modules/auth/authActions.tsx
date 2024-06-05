@@ -117,6 +117,9 @@ const authActions = {
             currentUser,
           },
         });
+        dispatch(muiActions.doInit());
+
+        getHistory().push('/');
       } catch (error) {
         await service.signout();
 
@@ -175,7 +178,6 @@ const authActions = {
           );
         AuthToken.set(token, rememberMe);
         currentUser = await service.fetchMe();
-        console.log(currentUser);
         dispatch({
           type: authActions.AUTH_SUCCESS,
           payload: {
@@ -184,6 +186,8 @@ const authActions = {
         });
 
         dispatch(muiActions.doInit());
+
+        getHistory().push('/admin');
       } catch (error) {
         await service.signout();
 

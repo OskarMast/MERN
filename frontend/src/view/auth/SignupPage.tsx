@@ -34,12 +34,6 @@ const schema = yup.object().shape({
 
 function SignupPage(): JSX.Element {
   const dispatch = useDispatch();
-  const location = useLocation();
-
-  const backgroundImageUrl = useSelector(
-    selectors.selectBackgroundImageUrl,
-  );
-  const logoUrl = useSelector(selectors.selectLogoUrl);
 
   const loading = useSelector(selectors.selectLoading);
 
@@ -47,16 +41,12 @@ function SignupPage(): JSX.Element {
     selectors.selectErrorMessage,
   );
 
-  const emailFromInvitation = queryString.parse(
-    location.search,
-  ).email;
-
   useEffect(() => {
     dispatch(actions.doClearErrorMessage());
   }, [dispatch]);
 
   const [initialValues] = useState({
-    email: emailFromInvitation || '',
+    email: '',
     password: '',
   });
 

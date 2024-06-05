@@ -12,49 +12,31 @@ export default class PermissionChecker {
   }
 
   get currentUserRolesIds() {
-    if (!this.currentUser || !this.currentUser.tenants) {
+    if (!this.currentUser || !this.currentUser.roles) {
       return [];
     }
 
-    const tenant = this.currentUser.tenants
-      .filter(
-        (tenantUser) => tenantUser.status === 'active',
-      )
-      .find(
-        (tenantUser) =>
-          tenantUser.tenant.id === this.currentTenant?.id,
-      );
+    const currentUser_role = this.currentUser.roles;
 
-    if (!tenant) {
+    if (!currentUser_role) {
       return [];
     }
 
-    return tenant.roles;
+    return currentUser_role;
   }
 
   get isAdmin() {
-    if (!this.currentUser || !this.currentUser.tenants) {
+    if (!this.currentUser || !this.currentUser.roles) {
       return [];
     }
 
-    const tenant = this.currentUser.tenants
-      .filter(
-        (tenantUser) => tenantUser.status === 'active',
-      )
-      .find(
-        (tenantUser) =>
-          tenantUser.tenant.id === this.currentTenant?.id,
-      );
+    const currentUser = this.currentUser.roles;
 
-    if (!tenant) {
+    if (!currentUser) {
       return [];
     }
 
-    return Boolean(
-      tenant.roles.find(
-        (role) => role === 'admin' || role === 'manager',
-      ),
-    );
+    return Boolean(currentUser.roles === 'admin');
   }
 
   match(permission) {
@@ -95,8 +77,8 @@ export default class PermissionChecker {
         return false;
       }
 
-      return arg.some((role) =>
-        this.currentUserRolesIds.includes(role),
+      return arg.some(
+        (role) => this.currentUserRolesIds == role,
       );
     }
 
@@ -142,10 +124,6 @@ export default class PermissionChecker {
       return true;
     }
 
-    if (!this.currentUser.tenants) {
-      return true;
-    }
-
     //return !this.currentUser.tenants.some(
     //  (tenant) => tenant.status === 'active',
     //);
@@ -156,19 +134,17 @@ export default class PermissionChecker {
       return true;
     }
 
-    if (!this.currentUser.tenants) {
+    if (!this.currentUser.roles) {
       return true;
     }
 
-    const tenant = this.currentUser.tenants.find(
-      (tenant) => tenant.status === 'active',
-    );
+    const tenant = this.currentUser.roles == 'admin';
 
     if (!tenant) {
       return true;
     }
 
-    return !tenant.roles || !tenant.roles.length;
+    return !tenant;
   }
 
   get isAuthenticated() {

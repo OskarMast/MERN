@@ -65,20 +65,6 @@ class AuthService {
           },
         );
 
-        // Handles onboarding process like
-        // invitation, creation of default tenant,
-        // or default joining the current tenant
-        await this.handleOnboard(
-          existingUser,
-          data.roles ? data.roles : [],
-          data.invitationToken,
-          data.tenantId,
-          {
-            ...options,
-            session,
-          },
-        );
-
         // Email may have been alreadyverified using the invitation token
         const isEmailVerified = Boolean(
           await UserRepository.count(
