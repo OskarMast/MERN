@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import TenantUserSchema from './schemas/tenantUserSchema';
 const Schema = mongoose.Schema;
 
 export default (database) => {
@@ -84,7 +83,7 @@ export default (database) => {
           ref: 'file',
         },
       ],
-      tenants: [TenantUserSchema],
+      roles: [{ type: String, maxlength: 255 }],
       jwtTokenInvalidBefore: { type: Date },
       createdBy: {
         type: Schema.Types.ObjectId,

@@ -1,3 +1,4 @@
+import 'core-js/actual/array/group-by';
 import { getUserNameOrEmailPrefix } from '../../utils/userUtils';
 import { IRepositoryOptions } from './IRepositoryOptions';
 import { isUserInTenant } from '../utils/userTenantUtils';
@@ -11,7 +12,6 @@ import MongooseRepository from './mongooseRepository';
 import MuiRepository from './muiRepository';
 import SettingsRepository from './settingsRepository';
 import User from '../models/user';
-import 'core-js/actual/array/group-by';
 
 export default class UserRepository {
   static async create(data, options: IRepositoryOptions) {

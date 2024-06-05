@@ -1,6 +1,5 @@
 import MongooseRepository from '../../database/repositories/mongooseRepository';
 import UserRepository from '../../database/repositories/userRepository';
-import TenantUserRepository from '../../database/repositories/tenantUserRepository';
 import assert from 'assert';
 import Error400 from '../../errors/Error400';
 import Plans from '../../security/plans';
@@ -56,12 +55,6 @@ export default class UserDestroyer {
   async _destroy(id) {
     const user = await UserRepository.findByIdWithoutAvatar(
       id,
-      this.options,
-    );
-
-    await TenantUserRepository.destroy(
-      this.options.currentTenant.id,
-      user.id,
       this.options,
     );
   }

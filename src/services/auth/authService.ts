@@ -3,7 +3,6 @@ import Error400 from '../../errors/Error400';
 import bcrypt from 'bcrypt';
 import EmailSender from '../../services/emailSender';
 import jwt from 'jsonwebtoken';
-import TenantUserRepository from '../../database/repositories/tenantUserRepository';
 import MongooseRepository from '../../database/repositories/mongooseRepository';
 import { getConfig } from '../../config';
 import TenantService from '../tenantService';
@@ -278,42 +277,6 @@ class AuthService {
     tenantId,
     options,
   ) {
-    if (invitationToken) {
-      try {
-        await TenantUserRepository.acceptInvitation(
-          invitationToken,
-          {
-            ...options,
-            currentUser,
-            bypassPermissionValidation: true,
-          },
-        );
-      } catch (error) {
-        console.error(error);
-        // In case of invitation acceptance error, does not prevent
-        // the user from sign up/in
-      }
-    }
-
-    const isMultiTenantViaSubdomain =
-      ['multi', 'multi-with-subdomain'].includes(
-        getConfig().TENANT_MODE,
-      ) && tenantId;
-
-    if (isMultiTenantViaSubdomain) {
-      await new TenantService({
-        ...options,
-        currentUser,
-      }).joinWithDefaultRolesOrAskApproval(
-        {
-          tenantId,
-          // leave empty to require admin's approval
-          roles,
-        },
-        options,
-      );
-    }
-
     const singleTenant =
       getConfig().TENANT_MODE === 'single';
 

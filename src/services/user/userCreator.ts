@@ -2,7 +2,6 @@ import assert from 'assert';
 import EmailSender from '../../services/emailSender';
 import UserRepository from '../../database/repositories/userRepository';
 import MongooseRepository from '../../database/repositories/mongooseRepository';
-import TenantUserRepository from '../../database/repositories/tenantUserRepository';
 import { tenantSubdomain } from '../tenantSubdomain';
 import { IServiceOptions } from '../IServiceOptions';
 import Error400 from '../../errors/Error400';
@@ -48,10 +47,6 @@ export default class UserCreator {
       );
       throw error;
     }
-
-    if (this._hasEmailsToInvite) {
-      await this._sendAllInvitationEmails();
-    }
   }
 
   async execute(data) {
@@ -83,24 +78,6 @@ export default class UserCreator {
             BCRYPT_SALT_ROUNDS,
           )
         : null;
-
-      let user = await UserRepository.createFromAuth(
-        { ...data, password: hashedPassword },
-        {
-          ...this.options,
-          session: this.session,
-        },
-      );
-
-      await TenantUserRepository.create(
-        this.options.currentTenant,
-        user,
-        this._roles,
-        {
-          ...this.options,
-          session: this.session,
-        },
-      );
 
       await MongooseRepository.commitTransaction(
         this.session,
@@ -168,58 +145,11 @@ export default class UserCreator {
         },
       );
     }
-
-    const isUserAlreadyInTenant = user.tenants.some(
-      (userTenant) =>
-        userTenant.tenant.id ===
-        this.options.currentTenant.id,
-    );
-
-    const tenantUser =
-      await TenantUserRepository.updateRoles(
-        this.options.currentTenant.id,
-        user.id,
-        this._roles,
-        {
-          ...this.options,
-          addRoles: true,
-          session: this.session,
-        },
-      );
-
-    if (!isUserAlreadyInTenant) {
-      this.emailsToInvite.push({
-        email,
-        token: tenantUser.invitationToken,
-      });
-    }
   }
 
   get _hasEmailsToInvite() {
     return (
       this.emailsToInvite && this.emailsToInvite.length
-    );
-  }
-
-  async _sendAllInvitationEmails() {
-    if (!this.sendInvitationEmails) {
-      return;
-    }
-
-    return Promise.all(
-      this.emailsToInvite.map((emailToInvite) => {
-        const link = `${tenantSubdomain.frontendUrl(
-          this.options.currentTenant,
-        )}/auth/invitation?token=${emailToInvite.token}`;
-
-        return new EmailSender(
-          EmailSender.TEMPLATES.INVITATION,
-          {
-            tenant: this.options.currentTenant,
-            link,
-          },
-        ).sendTo(emailToInvite.email);
-      }),
     );
   }
 

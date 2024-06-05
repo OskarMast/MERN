@@ -1,5 +1,4 @@
 import TenantRepository from '../database/repositories/tenantRepository';
-import TenantUserRepository from '../database/repositories/tenantUserRepository';
 import Error400 from '../errors/Error400';
 import MongooseRepository from '../database/repositories/mongooseRepository';
 import PermissionChecker from './user/permissionChecker';
@@ -55,13 +54,6 @@ export default class TenantService {
       if (tenantUser) {
         return;
       }
-
-      return await TenantUserRepository.create(
-        tenant,
-        this.options.currentUser,
-        roles,
-        { ...this.options, session },
-      );
     }
 
     let record = await TenantRepository.create(
@@ -77,16 +69,6 @@ export default class TenantService {
       currentTenant: record,
       session,
     });
-
-    await TenantUserRepository.create(
-      record,
-      this.options.currentUser,
-      [Roles.values.admin],
-      {
-        ...this.options,
-        session,
-      },
-    );
   }
 
   async joinWithDefaultRolesOrAskApproval(
@@ -104,49 +86,6 @@ export default class TenantService {
     if (!tenant) {
       return;
     }
-
-    // Reload the current user in case it has chenged
-    // in the middle of this session
-    const currentUserReloaded =
-      await UserRepository.findById(
-        this.options.currentUser.id,
-        {
-          ...this.options,
-          bypassPermissionValidation: true,
-          session,
-        },
-      );
-
-    const tenantUser = currentUserReloaded.tenants.find(
-      (userTenant) => {
-        return userTenant.tenant.id === tenant.id;
-      },
-    );
-
-    if (tenantUser) {
-      // If found the invited tenant user via email
-      // accepts the invitation
-      if (tenantUser.status === 'invited') {
-        return await TenantUserRepository.acceptInvitation(
-          tenantUser.invitationToken,
-          {
-            ...this.options,
-            session,
-          },
-        );
-      }
-
-      // In this case the tenant user already exists
-      // and it's accepted or with empty permissions
-      return;
-    }
-
-    return await TenantUserRepository.create(
-      tenant,
-      this.options.currentUser,
-      roles,
-      { ...this.options, session },
-    );
   }
 
   // In case this user has been invited
@@ -160,36 +99,6 @@ export default class TenantService {
     if (!tenant) {
       return;
     }
-
-    // Reload the current user in case it has chenged
-    // in the middle of this session
-    const currentUserReloaded =
-      await UserRepository.findById(
-        this.options.currentUser.id,
-        {
-          ...this.options,
-          bypassPermissionValidation: true,
-          session,
-        },
-      );
-
-    const tenantUser = currentUserReloaded.tenants.find(
-      (userTenant) => {
-        return userTenant.tenant.id === tenant.id;
-      },
-    );
-
-    if (!tenantUser || tenantUser.status !== 'invited') {
-      return;
-    }
-
-    return await TenantUserRepository.acceptInvitation(
-      tenantUser.invitationToken,
-      {
-        ...this.options,
-        session,
-      },
-    );
   }
 
   async create(data) {
@@ -216,16 +125,6 @@ export default class TenantService {
         ...this.options,
         session,
       });
-
-      await TenantUserRepository.create(
-        record,
-        this.options.currentUser,
-        [Roles.values.admin],
-        {
-          ...this.options,
-          session,
-        },
-      );
 
       await SettingsService.findOrCreateDefault({
         ...this.options,
@@ -414,93 +313,6 @@ export default class TenantService {
       args,
       this.options,
     );
-  }
-
-  async acceptInvitation(
-    token,
-    forceAcceptOtherEmail = false,
-  ) {
-    const session = await MongooseRepository.createSession(
-      this.options.database,
-    );
-
-    try {
-      const tenantUser =
-        await TenantUserRepository.findByInvitationToken(
-          token,
-          {
-            ...this.options,
-            session,
-          },
-        );
-
-      if (!tenantUser || tenantUser.status !== 'invited') {
-        throw new Error404();
-      }
-
-      const isNotCurrentUserEmail =
-        tenantUser.user.id !== this.options.currentUser.id;
-
-      if (!forceAcceptOtherEmail && isNotCurrentUserEmail) {
-        throw new Error400(
-          this.options.language,
-          'tenant.invitation.notSameEmail',
-          tenantUser.user.email,
-          this.options.currentUser.email,
-        );
-      }
-
-      await TenantUserRepository.acceptInvitation(token, {
-        ...this.options,
-        currentTenant: { id: tenantUser.tenant.id },
-        session,
-      });
-
-      await MongooseRepository.commitTransaction(session);
-
-      return tenantUser.tenant;
-    } catch (error) {
-      await MongooseRepository.abortTransaction(session);
-
-      throw error;
-    }
-  }
-
-  async declineInvitation(token) {
-    const session = await MongooseRepository.createSession(
-      this.options.database,
-    );
-
-    try {
-      const tenantUser =
-        await TenantUserRepository.findByInvitationToken(
-          token,
-          {
-            ...this.options,
-            session,
-          },
-        );
-
-      if (!tenantUser || tenantUser.status !== 'invited') {
-        throw new Error404();
-      }
-
-      await TenantUserRepository.destroy(
-        tenantUser.tenant.id,
-        this.options.currentUser.id,
-        {
-          ...this.options,
-          session,
-          currentTenant: { id: tenantUser.tenant.id },
-        },
-      );
-
-      await MongooseRepository.commitTransaction(session);
-    } catch (error) {
-      await MongooseRepository.abortTransaction(session);
-
-      throw error;
-    }
   }
 
   async import(data, importHash) {

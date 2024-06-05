@@ -3,7 +3,6 @@ import assert from 'assert';
 import Error400 from '../../errors/Error400';
 import MongooseRepository from '../../database/repositories/mongooseRepository';
 import UserRepository from '../../database/repositories/userRepository';
-import TenantUserRepository from '../../database/repositories/tenantUserRepository';
 import Plans from '../../security/plans';
 import { IServiceOptions } from '../IServiceOptions';
 
@@ -73,13 +72,6 @@ export default class UserEditor {
       ...this.options,
       session: this.session,
     });
-
-    await TenantUserRepository.updateRoles(
-      this.options.currentTenant.id,
-      this.data.id,
-      this.data.roles,
-      this.options,
-    );
   }
 
   /**
