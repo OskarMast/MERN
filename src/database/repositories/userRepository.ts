@@ -2,7 +2,6 @@ import 'core-js/actual/array/group-by';
 import { getUserNameOrEmailPrefix } from '../../utils/userUtils';
 import { IRepositoryOptions } from './IRepositoryOptions';
 import { isUserInTenant } from '../utils/userTenantUtils';
-import AuditLogRepository from './auditLogRepository';
 import crypto from 'crypto';
 import Error404 from '../../errors/Error404';
 import FileRepository from './fileRepository';
@@ -48,16 +47,6 @@ export default class UserRepository {
           updatedBy: currentUser.id,
         },
       ],
-      options,
-    );
-
-    await AuditLogRepository.log(
-      {
-        entityName: 'user',
-        entityId: user.id,
-        action: AuditLogRepository.CREATE,
-        values: user,
-      },
       options,
     );
 
@@ -107,15 +96,6 @@ export default class UserRepository {
     );
 
     delete user.password;
-    await AuditLogRepository.log(
-      {
-        entityName: 'user',
-        entityId: user.id,
-        action: AuditLogRepository.CREATE,
-        values: user,
-      },
-      options,
-    );
 
     return this.findById(user.id, {
       ...options,
@@ -190,16 +170,6 @@ export default class UserRepository {
     );
 
     const user = await this.findById(id, options);
-
-    await AuditLogRepository.log(
-      {
-        entityName: 'user',
-        entityId: id,
-        action: AuditLogRepository.UPDATE,
-        values: user,
-      },
-      options,
-    );
 
     return user;
   }
@@ -311,16 +281,6 @@ export default class UserRepository {
     );
 
     const user = await this.findById(id, options);
-
-    await AuditLogRepository.log(
-      {
-        entityName: 'user',
-        entityId: id,
-        action: AuditLogRepository.UPDATE,
-        values: user,
-      },
-      options,
-    );
 
     return user;
   }
@@ -771,18 +731,6 @@ export default class UserRepository {
       options,
     );
 
-    await AuditLogRepository.log(
-      {
-        entityName: 'user',
-        entityId: id,
-        action: AuditLogRepository.UPDATE,
-        values: {
-          emailVerified: true,
-        },
-      },
-      options,
-    );
-
     return true;
   }
 
@@ -913,16 +861,6 @@ export default class UserRepository {
       options,
     );
 
-    await AuditLogRepository.log(
-      {
-        entityName: 'user',
-        entityId: user.id,
-        action: AuditLogRepository.CREATE,
-        values: user,
-      },
-      options,
-    );
-
     return this.findById(user.id, {
       ...options,
       bypassPermissionValidation: true,
@@ -991,17 +929,6 @@ export default class UserRepository {
     }
     await User(options.database).deleteOne(
       { _id: id },
-      options,
-    );
-    await AuditLogRepository.log(
-      {
-        entityName: 'user',
-        entityId: user.id,
-        action: AuditLogRepository.DELETE,
-        values: {
-          email: user.email,
-        },
-      },
       options,
     );
   }
