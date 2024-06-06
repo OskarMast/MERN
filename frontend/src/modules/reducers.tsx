@@ -9,6 +9,8 @@ import plan from 'src/modules/plan/planReducers';
 import settings from 'src/modules/settings/settingsReducers';
 import tenant from 'src/modules/tenant/tenantReducers';
 import user from 'src/modules/user/userReducers';
+import dashboard from 'src/modules/dashboard/dashboardReducers';
+
 export default (history) =>
   combineReducers({
     router: connectRouter(history),
@@ -21,4 +23,5 @@ export default (history) =>
     auditLog,
     settings,
     user,
+    dashboard,
   });
