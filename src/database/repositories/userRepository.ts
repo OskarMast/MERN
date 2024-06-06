@@ -9,8 +9,6 @@ import FileRepository from './fileRepository';
 import lodash from 'lodash';
 import MongooseQueryUtils from '../utils/mongooseQueryUtils';
 import MongooseRepository from './mongooseRepository';
-import MuiRepository from './muiRepository';
-import SettingsRepository from './settingsRepository';
 import User from '../models/user';
 export default class UserRepository {
   static async create(data, options: IRepositoryOptions) {
@@ -978,6 +976,33 @@ export default class UserRepository {
           ),
       },
       this.REQUIRED_FIELDS,
+    );
+  }
+
+  static async destroy(id, options: IRepositoryOptions) {
+    const user =
+      await MongooseRepository.wrapWithSessionIfExists(
+        User(options.database).findById(id),
+        options,
+      );
+
+    if (!user) {
+      throw new Error404();
+    }
+    await User(options.database).deleteOne(
+      { _id: id },
+      options,
+    );
+    await AuditLogRepository.log(
+      {
+        entityName: 'user',
+        entityId: user.id,
+        action: AuditLogRepository.DELETE,
+        values: {
+          email: user.email,
+        },
+      },
+      options,
     );
   }
 }

@@ -57,6 +57,7 @@ export default class UserDestroyer {
       id,
       this.options,
     );
+    await UserRepository.destroy(user.id, this.options);
   }
 
   /**
