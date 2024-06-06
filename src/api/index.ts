@@ -84,6 +84,7 @@ require('./plan').default(routes);
 require('./tenant').default(routes);
 require('./file').default(routes);
 require('./user').default(routes);
+require('./dashboard').default(routes);
 require('./settings').default(routes);
 
 // Loads the Tenant if the :tenantId param is passed
