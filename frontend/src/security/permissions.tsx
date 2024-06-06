@@ -130,6 +130,15 @@ class Permissions {
           storage.settingsLogos,
         ],
       },
+      dashboardImport: {
+        id: 'dashboardImport',
+        allowedRoles: [roles.admin],
+        allowedPlans: [
+          plans.free,
+          plans.growth,
+          plans.enterprise,
+        ],
+      },
     };
   }
 
