@@ -71,18 +71,16 @@ function UserView(props) {
           <CustomViewItem
             label={i18n('user.fields.roles')}
             value={user.roles}
-            render={(value) =>
-              value.map((roleId) => (
-                <MDBadgeDot
-                  key={roleId}
-                  width="max-content"
-                  badgeContent={Roles.labelOf(roleId)}
-                  color={sidenavColor}
-                  variant="contained"
-                  size="md"
-                />
-              ))
-            }
+            render={(value) => (
+              <MDBadgeDot
+                key={user.roles}
+                width="max-content"
+                badgeContent={Roles.labelOf(user.roles)}
+                color={sidenavColor}
+                variant="contained"
+                size="md"
+              />
+            )}
           />
         </Grid>
         <Grid item xs={12}>
