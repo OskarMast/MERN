@@ -21,7 +21,7 @@ function UserPage() {
             <MDTypography variant="h3">
               {i18n('user.title')}
             </MDTypography>
-            <UserToolbar />
+            {/* <UserToolbar /> */}
           </MDBox>
           <UserFilter />
         </MDBox>
