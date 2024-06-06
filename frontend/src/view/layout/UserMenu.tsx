@@ -124,7 +124,7 @@ function UserMenu({
             title={i18n('auth.tenants')}
           />
         )}
-        {config.apiDocumentationUrl && (
+        {/* {config.apiDocumentationUrl && (
           <NotificationItem
             outlink
             href={config.apiDocumentationUrl}
@@ -133,7 +133,7 @@ function UserMenu({
             target="_blank"
             rel="noopener noreferrer"
           />
-        )}
+        )} */}
         <NotificationItem
           onClick={doSignout}
           icon={<Icon>exit_to_app</Icon>}

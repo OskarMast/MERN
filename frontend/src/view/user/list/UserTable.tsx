@@ -25,7 +25,6 @@ import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
 import Tooltip from '@mui/material/Tooltip';
 import userSelectors from 'src/modules/user/userSelectors';
-import UserStatusView from 'src/view/user/view/UserStatusView';
 
 function UserTable() {
   const dispatch = useDispatch();
@@ -131,9 +130,6 @@ function UserTable() {
               <DataTableHeadCell sorted={false}>
                 {i18n('user.fields.roles')}
               </DataTableHeadCell>
-              <DataTableHeadCell sorted={false}>
-                {i18n('user.fields.status')}
-              </DataTableHeadCell>
               <DataTableHeadCell sorted={false} width="0">
                 {' '}
               </DataTableHeadCell>
@@ -194,15 +190,14 @@ function UserTable() {
                     {row.fullName}
                   </DataTableBodyCell>
                   <DataTableBodyCell>
-                      <MDBadgeDot
-                        key={row.roles}
-                        badgeContent={Roles.labelOf(row.roles)}
-                        color={sidenavColor}
-                        variant="contained"
-                      />
-                  </DataTableBodyCell>
-                  <DataTableBodyCell>
-                    <UserStatusView value={row.status} />
+                    <MDBadgeDot
+                      key={row.roles}
+                      badgeContent={Roles.labelOf(
+                        row.roles,
+                      )}
+                      color={sidenavColor}
+                      variant="contained"
+                    />
                   </DataTableBodyCell>
                   <DataTableBodyCell>
                     <MDBox
