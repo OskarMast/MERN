@@ -18,7 +18,6 @@ export default class UserEditor {
 
   async update(data) {
     this.data = data;
-
     await this._validate();
 
     try {

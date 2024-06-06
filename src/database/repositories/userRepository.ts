@@ -303,9 +303,6 @@ export default class UserRepository {
   ) {
     const currentUser =
       MongooseRepository.getCurrentUser(options);
-
-    data = this._preSave(data);
-
     await User(options.database).updateOne(
       { _id: id },
       {
@@ -692,13 +689,11 @@ export default class UserRepository {
         currentTenant,
       );
     }
-
     record = await this._fillRelationsAndFileDownloadUrls(
       record,
       options,
       metaOnly,
     );
-
     return record;
   }
 
@@ -884,22 +879,6 @@ export default class UserRepository {
 
     if (metaOnly) {
       return output;
-    }
-
-    if (output.tenants && output.tenants.length) {
-      await Promise.all(
-        output.tenants.map(async (userTenant) => {
-          userTenant.tenant.settings =
-            await SettingsRepository.find({
-              currentTenant: userTenant.tenant,
-              ...options,
-            });
-          userTenant.tenant.mui = await MuiRepository.find({
-            currentTenant: userTenant.tenant,
-            ...options,
-          });
-        }),
-      );
     }
 
     output.avatars =
