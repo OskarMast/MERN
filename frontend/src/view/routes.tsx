@@ -24,6 +24,16 @@ const privateRoutes = [
   },
 
   {
+    path: '/admin/dashboard/importer',
+    i18n: 'dashboard.importer.title',
+    parent: '/admin/dashboard',
+    loader: () =>
+      import('src/view/dashboard/DashboardImporterPage'),
+    permissionRequired: permissions.dashboardImport,
+    exact: true,
+  },
+
+  {
     path: '/admin/report',
     collapseName: 'reports',
     i18n: 'collapses.reports.menu',
