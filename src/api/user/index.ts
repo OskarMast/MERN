@@ -1,6 +1,6 @@
 export default (app) => {
   app.post(
-    `/tenant/:tenantId/userCreate`,
+    `/tenant/:tenantId/user`,
     require('./userCreate').default,
   );
   app.put(
@@ -14,6 +14,10 @@ export default (app) => {
   app.delete(
     `/tenant/:tenantId/user`,
     require('./userDestroy').default,
+  );
+  app.get(
+    `/tenant/:tenantId/user`,
+    require('./userList').default,
   );
   app.get(
     `/tenant/:tenantId/user/autocomplete`,

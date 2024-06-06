@@ -69,10 +69,9 @@ export default class PermissionChecker {
    * Checks if the current user roles allows the permission.
    */
   hasRolePermission(permission) {
-    return this.currentUserRolesIds.some((role) =>
-      permission.allowedRoles.some(
-        (allowedRole) => allowedRole === role,
-      ),
+    return permission.allowedRoles.some(
+      (allowedRole) =>
+        allowedRole === this.currentUserRolesIds,
     );
   }
 
@@ -101,25 +100,17 @@ export default class PermissionChecker {
    * Returns the Current User Roles.
    */
   get currentUserRolesIds() {
-    if (!this.currentUser || !this.currentUser.tenants) {
+    if (!this.currentUser || !this.currentUser.roles) {
       return [];
     }
 
-    const tenant = this.currentUser.tenants
-      .filter(
-        (tenantUser) => tenantUser.status === 'active',
-      )
-      .find((tenantUser) => {
-        return (
-          tenantUser.tenant.id === this.currentTenant.id
-        );
-      });
+    const currentUser_role = this.currentUser.roles;
 
-    if (!tenant) {
+    if (!currentUser_role) {
       return [];
     }
 
-    return tenant.roles;
+    return currentUser_role;
   }
 
   /**

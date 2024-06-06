@@ -365,37 +365,22 @@ export default class UserRepository {
 
   static async findAndCountAll(
     { filter, limit = 0, offset = 0, orderBy = '' },
-    role,
     options: IRepositoryOptions,
   ) {
     const currentTenant =
       MongooseRepository.getCurrentTenant(options);
-
     let criteriaAnd: any = [];
 
-    if (role === 'admin') {
-      criteriaAnd.push({
-        tenants: {
-          $elemMatch: {
-            tenant: currentTenant.id,
-            roles: {
-              $elemMatch: { $in: ['admin', 'user'] },
-            },
+    criteriaAnd.push({
+      tenants: {
+        $elemMatch: {
+          tenant: currentTenant.id,
+          roles: {
+            $elemMatch: { $in: ['admin', 'user'] },
           },
         },
-      });
-    } else {
-      criteriaAnd.push({
-        tenants: {
-          $elemMatch: {
-            tenant: currentTenant.id,
-            roles: {
-              $elemMatch: { $in: ['user'] },
-            },
-          },
-        },
-      });
-    }
+      },
+    });
 
     if (filter) {
       if (filter.id) {
@@ -444,16 +429,13 @@ export default class UserRepository {
         });
       }
 
-      if (filter.role) {
+      if (filter.roles) {
         criteriaAnd.push({
-          tenants: { $elemMatch: { roles: filter.role } },
-        });
-      }
-
-      if (filter.status) {
-        criteriaAnd.push({
-          tenants: {
-            $elemMatch: { status: filter.status },
+          ['roles']: {
+            $regex: MongooseQueryUtils.escapeRegExp(
+              filter.roles,
+            ),
+            $options: 'i',
           },
         });
       }
