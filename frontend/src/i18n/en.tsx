@@ -229,460 +229,6 @@ const en = {
     },
   },
 
-  teacher: {
-    validations: {
-      // eslint-disable-next-line
-      email: 'Email ${value} is invalid',
-    },
-    title: 'Teachers',
-    subTitle: {
-      generalInfo: 'General Information',
-      profileData: 'Profile Data',
-      schedules: 'Schedules',
-    },
-    menu: 'Teachers',
-    doAddSuccess: 'Teacher(s) successfully saved',
-    doUpdateSuccess: 'Teacher successfully saved',
-    exporterFileName: 'teachers_export',
-    doDestroySuccess: 'Teacher successfully deleted',
-    doDestroyAllSelectedSuccess:
-      'Teachers successfully deleted',
-    edit: {
-      title: 'Edit Teacher',
-    },
-    new: {
-      title: 'Add Teacher',
-      titleModal: 'Add Teacher',
-      emailsHint:
-        'Separate multiple email addresses using the comma character.',
-    },
-    view: {
-      title: 'View Teacher',
-      activity: 'Activity',
-    },
-    importer: {
-      title: 'Import Teachers',
-      fileName: 'teachers_import_data',
-      hint: 'Files/Images columns must be the URLs of the files separated by space. Relationships must be the ID of the referenced records separated by space. Roles must be the role ids separated by space.',
-    },
-    errors: {
-      userAlreadyExists:
-        'Teacher with this email already exists',
-      userNotFound: 'Teacher not found',
-      revokingOwnPermission: `You can't revoke your own admin permission`,
-    },
-  },
-
-  student: {
-    subtitle: {
-      profileData: 'Profile',
-      otherData: 'Other Information',
-      address: 'Address',
-    },
-    registration: {
-      menu: 'Registration',
-      title: 'Registration',
-    },
-    validations: {
-      // eslint-disable-next-line
-      email: 'Email ${value} is invalid',
-    },
-    title: 'Students',
-    menu: 'Students',
-    doAddSuccess: 'Student(s) successfully saved',
-    doUpdateSuccess: 'Student successfully saved',
-    exporterFileName: 'students_export',
-    doDestroySuccess: 'Student successfully deleted',
-    doDestroyAllSelectedSuccess:
-      'Students successfully deleted',
-    edit: {
-      title: 'Edit Student',
-    },
-    new: {
-      title: 'Add Student',
-      titleModal: 'Add Student',
-      emailsHint:
-        'Separate multiple email addresses using the comma character.',
-    },
-    view: {
-      title: 'View Student',
-      activity: 'Activity',
-    },
-    importer: {
-      title: 'Import Students',
-      fileName: 'users_import_data',
-      hint: 'Files/Images columns must be the URLs of the files separated by space. Relationships must be the ID of the referenced records separated by space. Roles must be the role ids separated by space.',
-    },
-    errors: {
-      userAlreadyExists:
-        'Student with this email already exists',
-      userNotFound: 'Student not found',
-      revokingOwnPermission: `You can't revoke your own admin permission`,
-    },
-  },
-
-  payment: {
-    doAddSuccess: 'Payment(s) successfully saved',
-    doUpdateSuccess: 'Payment successfully saved',
-    doDestroySuccess: 'Payment successfully deleted',
-    doDestroyAllSelectedSuccess:
-      'Payments successfully deleted',
-    menu: 'Payments',
-    title: 'Payments',
-    fields: {
-      id: 'Id',
-      month: 'Month',
-      year: 'Year',
-      expiredDate: 'Expired Date',
-      cost: 'Total',
-      category: 'Payment Category',
-      price: 'Price',
-      quantity: 'Quantity',
-      VAT: 'VAT',
-      paymentMethod: 'Payment Method',
-      paymentCategory: 'Payment Category',
-      lessonsNumber: 'Number of Lessons',
-      lastPayment: 'Last Payment',
-      paymentDate: 'Payment Date',
-      amount: 'SubTotal',
-    },
-    history: {
-      menu: 'Payment History',
-      title: 'Payment History',
-      view: {
-        title: 'View Payment History',
-      },
-    },
-    expired: {
-      menu: 'Expired Payments',
-      title: 'Expired Payments',
-      view: {
-        title: 'View Expired Payment',
-      },
-    },
-    category: {
-      menu: 'Payment Categories',
-      title: 'Payment Categories',
-      new: {
-        title: 'Add Payment Category',
-      },
-      edit: {
-        title: 'Edit Payment Category',
-      },
-      view: {
-        title: 'View Payment Category',
-      },
-      doDestroySuccess:
-        'Payment Category successfully deleted',
-      doAddSuccess:
-        'Payment Category(s) successfully saved',
-      doUpdateSuccess:
-        'Payment Category successfully saved',
-      doDestroyAllSelectedSuccess:
-        'Payment Categories successfully deleted',
-      fields: {
-        name: 'Payment Category Title',
-      },
-    },
-    method: {
-      menu: 'Payment Methods',
-      title: 'Payment Methods',
-      new: {
-        title: 'Add Payment Method',
-      },
-      edit: {
-        title: 'Edit Payment Method',
-      },
-      view: {
-        title: 'View Payment Method',
-      },
-      doDestroySuccess:
-        'Payment Method successfully deleted',
-      doAddSuccess: 'Payment Method(s) successfully saved',
-      doUpdateSuccess: 'Payment Method successfully saved',
-      doDestroyAllSelectedSuccess:
-        'Payment Methods successfully deleted',
-      fields: {
-        name: 'Payment Method Title',
-      },
-    },
-    add: {
-      title: 'Add Payment',
-    },
-  },
-
-  registration: {
-    doRegisterSuccess: 'Lesson(s) successfully registered',
-    menu: 'Registration',
-    title: 'Registration',
-    registerLessons: 'Register Lessons',
-  },
-
-  class: {
-    doAddSuccess: 'Class(s) successfully saved',
-    doUpdateSuccess: 'Class successfully saved',
-    doDestroySuccess: 'Class successfully deleted',
-    doDestroyAllSelectedSuccess:
-      'Classes successfully deleted',
-    menu: 'Classes',
-    title: 'Classes',
-    fields: {
-      name: 'Class Name',
-      category: 'Category',
-      pool: 'Pool',
-      duration: 'Duration',
-      grade: 'Grade',
-    },
-    new: {
-      title: 'Add Class',
-    },
-    edit: {
-      title: 'Edit Class',
-    },
-    view: {
-      title: 'View Class',
-    },
-  },
-
-  classCategory: {
-    doAddSuccess: 'Class Category(s) successfully saved',
-    doUpdateSuccess: 'Class Category successfully saved',
-    doDestroySuccess: 'Class Category successfully deleted',
-    doDestroyAllSelectedSuccess:
-      'Class Categories successfully deleted',
-    menu: 'Classe Categories',
-    title: 'Classe Categories',
-    fields: {
-      name: 'Class Category Name',
-      comment: 'Comment',
-    },
-    new: {
-      title: 'Add Class Category',
-    },
-    edit: {
-      title: 'Edit Class Category',
-    },
-    view: {
-      title: 'View Class Category',
-    },
-  },
-
-  lesson: {
-    doAddSuccess: 'Lesson(s) successfully saved',
-    doUpdateSuccess: 'Lesson successfully saved',
-    doDestroySuccess: 'Lesson successfully deleted',
-    doDestroyAllSelectedSuccess:
-      'Lessons successfully deleted',
-    menu: 'Lessons',
-    title: 'Lessons',
-    fields: {
-      class: 'Class',
-      day: 'Day',
-      time: 'Time',
-      teacher: 'Teacher',
-    },
-    new: {
-      title: 'Add Lesson',
-    },
-    edit: {
-      title: 'Edit Lesson',
-    },
-    view: {
-      title: 'View Lesson',
-    },
-    update: {
-      success: 'Lesson successfully updated',
-    },
-    create: {
-      success: 'Lesson successfully created',
-    },
-  },
-
-  widgets: {
-    lessonsOnCalendar: {
-      modals: {
-        new: {
-          title: 'Add Lesson',
-        },
-        edit: {
-          title: 'Edit Lesson',
-        },
-        recurring: {
-          title: 'Recurring Lesson',
-        },
-      },
-      title: 'Calendar',
-    },
-    countMaleAndFemale: {
-      male: 'Male',
-      female: 'Female',
-      title: 'Gender of Students',
-    },
-    totalStudents: {
-      title: `Today's Students`,
-    },
-    totalTeachers: {
-      title: `Today's Teachers`,
-    },
-    maxAttendanceDay: {
-      title: 'Day of Highest Attendance',
-    },
-    totalPaymentPerMonth: {
-      title: 'Monthly Payments',
-      label: 'amount of payments',
-    },
-    incomeToday: {
-      title: `Earning`,
-    },
-    totalPaidStudentsPerMonth: {
-      title: 'Paid Students',
-      description:
-        'This shows number of students who paid for each month',
-      date: 'just updated',
-      label: 'number of paid students',
-    },
-    totalNewStudentsPerMonth: {
-      title: 'New Students',
-      description:
-        'This shows number of students who were registered for each month',
-      date: 'just updated',
-      label: 'number of registered students',
-    },
-    totalStudentsByAge: {
-      title: 'Students By Ages',
-      description: `This shows number of students by each age's range`,
-      date: 'just updated',
-      label: 'number of students',
-    },
-  },
-
-  attendance: {
-    doAddSuccess: 'Attendance(s) successfully saved',
-    title: 'Attendance',
-    menu: 'Attendance',
-    class: {
-      menu: 'Classes',
-    },
-    history: {
-      menu: 'History',
-    },
-    view: {
-      title: 'View Attendance',
-      note: 'Please check attended students',
-    },
-    subTitle: {
-      inProgress: 'In Progress',
-      upcoming: 'Upcoming',
-      finished: 'Finished',
-      seeAll: 'See All',
-    },
-  },
-
-  pool: {
-    doAddSuccess: 'Swimming Pool(s) successfully saved',
-    doUpdateSuccess: 'Swimming Pool successfully saved',
-    doDestroySuccess: 'Swimming Pool successfully deleted',
-    doDestroyAllSelectedSuccess:
-      'Swimming Pools successfully deleted',
-    menu: 'Swimming Pools',
-    title: 'Swimming Pools',
-    fields: {
-      name: 'Name',
-    },
-    new: {
-      title: 'Add Swimming Pool',
-    },
-    edit: {
-      title: 'Edit Swimming Pool',
-    },
-    view: {
-      title: 'View Swimming Pool',
-    },
-  },
-
-  document: {
-    doAddSuccess: 'Document(s) successfully saved',
-    doUpdateSuccess: 'Document successfully saved',
-    doDestroySuccess: 'Document successfully deleted',
-    doDestroyAllSelectedSuccess:
-      'Documents successfully deleted',
-    menu: 'Documents',
-    title: 'Documents',
-    fields: {
-      name: 'Name',
-      description: 'Description',
-      attachment: 'Attachment',
-      lastUpdatedRange: 'Last Updated Date Range',
-      lastUpdated: 'Last Updated Date',
-    },
-    new: {
-      title: 'Add Document',
-    },
-    edit: {
-      title: 'Edit Document',
-    },
-    view: {
-      title: 'View Document',
-    },
-  },
-
-  grade: {
-    doAddSuccess: 'Grade(s) successfully saved',
-    doUpdateSuccess: 'Grade successfully saved',
-    doDestroySuccess: 'Grade successfully deleted',
-    doDestroyAllSelectedSuccess:
-      'Grades successfully deleted',
-    menu: 'Grades',
-    title: 'Grades',
-    fields: {
-      name: 'Name',
-    },
-    new: {
-      title: 'Add Grade',
-    },
-    edit: {
-      title: 'Edit Grade',
-    },
-    view: {
-      title: 'View Grade',
-    },
-  },
-
-  skill: {
-    doAddSuccess: 'Skill(s) successfully saved',
-    doUpdateSuccess: 'Skill successfully saved',
-    doDestroySuccess: 'Skill successfully deleted',
-    doDestroyAllSelectedSuccess:
-      'Skills successfully deleted',
-    menu: 'Skills',
-    title: 'Skills',
-    fields: {
-      name: 'Name',
-      grade: 'Grade',
-      icon: 'Icon',
-    },
-    new: {
-      title: 'Add Skill',
-    },
-    edit: {
-      title: 'Edit Skill',
-    },
-    view: {
-      title: 'View Skill',
-    },
-  },
-
-  property: {
-    menu: 'Properties',
-    pool: {
-      menu: 'Pools',
-    },
-  },
-
-  school: {
-    menu: 'My School',
-  },
-
   home: {
     menu: {
       schools: 'Schools',
@@ -819,33 +365,88 @@ const en = {
     },
   },
   dashboard: {
-    menu: 'Dashboard',
-    message: `This page uses fake data for demonstration purposes only. You can edit it at frontend/view/dashboard/DashboardPage.ts.`,
-    charts: {
-      day: 'Day',
-      red: 'Red',
-      green: 'Green',
-      yellow: 'Yellow',
-      grey: 'Grey',
-      blue: 'Blue',
-      orange: 'Orange',
-      months: {
-        1: 'January',
-        2: 'February',
-        3: 'March',
-        4: 'April',
-        5: 'May',
-        6: 'June',
-        7: 'July',
-      },
-      eating: 'Eating',
-      drinking: 'Drinking',
-      sleeping: 'Sleeping',
-      designing: 'Designing',
-      coding: 'Coding',
-      cycling: 'Cycling',
-      running: 'Running',
-      customer: 'Customer',
+    menu: 'Upload CSV',
+    title: 'Upload CSV',
+    lead: 'Lead Info',
+    company: 'Company Info',
+    linkedinUrl: 'Linkedin URL',
+    firstName: 'First Name',
+    lastName: 'Last Name',
+    email: 'Email',
+    companyName: 'Company Name',
+    website: 'Website',
+    phone: 'Phone',
+    importer: {
+      title: 'Company/Leads',
+      fileName: 'company_lead_import_template',
+      hint: 'Files/Images columns must be the URLs of the files separated by space. Relationships must be the ID of the referenced records separated by space. Roles must be the role ids separated by space.',
+    },
+    fields: {
+      fullName: 'FullName',
+      industry: 'Industry',
+      jobTitle: 'JobTitle',
+      subRole: 'SubRole',
+      industry2: 'Industry2',
+      emails: 'Emails',
+      mobile: 'Mobile',
+      phoneNumbers: 'Phone Numbers',
+      companyName: 'Company Name',
+      companyIndustry: 'Company Industry',
+      companyWebsite: 'Company Website',
+      companySize: 'Company Size',
+      companyFounded: 'Company Founded',
+      location: 'Location',
+      locality: 'Locality',
+      metro: 'Metro',
+      region: 'Region',
+      skills: 'Skills',
+      firstName: 'First Name',
+      middleInitial: 'Middle Initial',
+      middleName: 'Middle Name',
+      lastName: 'Last Name',
+      birthYear: 'Birth Year',
+      birthDate: 'Birth Date',
+      gender: 'Gender',
+      linkedinUrl: 'Linkedin Url',
+      linkedinUser: 'Linkedin User',
+      facebookUrl: 'Facebook Url',
+      facebookUser: 'Facebook User',
+      twitterUrl: 'Twitter Url',
+      twitterUser: 'Twitter User',
+      githubUrl: 'Github Url',
+      githubUser: 'Github User',
+      companyLinkedinUrl: 'Company Linkedin Url',
+      companyFacebookUrl: 'Company Facebook Url',
+      companyTwitterUrl: 'Company Twitter Url',
+      companyLocationName: 'Company Location Name',
+      companyLocationLocality: 'Company Location Locality',
+      companyLocationMetro: 'Company Location Metro',
+      companyLocationRegion: 'Company LocationRegion',
+      companyLocationGeo: 'Company Location Geo',
+      companyLocationStreetAddress:
+        'Company Location Street Address',
+      companyLocationStreetAddressLine2:
+        'Company Location Street Address Line2',
+      companyLocationPostalCode:
+        'Company Location Postal Code',
+      companyLocationCountry: 'Company Location Country',
+      companyLocationContinent:
+        'Company Location Continent',
+      lastUpdated: 'Last Updated',
+      startDate: 'Start Date',
+      jobSummary: 'Job Summary',
+      locationCountry: 'Location Country',
+      locationContinent: 'Location Continent',
+      streetAddress: 'Street Address',
+      addressLine2: 'Address Line2',
+      postalCode: 'Postal Code',
+      locationGeo: 'Location Geo',
+      linkedinConnections: 'Linkedin Connections',
+      inferredSalary: 'Inferred Salary',
+      yearsExperience: 'Years Experience',
+      summary: 'Summary',
+      countries: 'Countries',
+      interests: 'Interests',
     },
   },
   errors: {
