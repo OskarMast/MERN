@@ -132,7 +132,7 @@ function UserToolbar(props) {
 
   return (
     <ToolbarWrapper>
-      {hasPermissionToCreate && (
+      {/* {hasPermissionToCreate && (
         <MDButton
           variant="contained"
           color={sidenavColor}
@@ -156,10 +156,10 @@ function UserToolbar(props) {
         >
           {i18n('common.import')}
         </MDButton>
-      )}
+      )} */}
 
       {renderDestroyButton()}
-
+      {/* 
       {hasPermissionToAuditLogs && (
         <MDButton
           variant="outlined"
@@ -173,7 +173,7 @@ function UserToolbar(props) {
         </MDButton>
       )}
 
-      {renderExportButton()}
+      {renderExportButton()} */}
 
       {destroyAllConfirmVisible && (
         <ConfirmModal

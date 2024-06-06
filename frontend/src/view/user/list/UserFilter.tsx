@@ -35,7 +35,7 @@ const schema = yup.object().shape({
     i18n('user.fields.fullName'),
   ),
   email: yupFilterSchemas.email(i18n('user.fields.email')),
-  role: yupFilterSchemas.enumerator(
+  roles: yupFilterSchemas.enumerator(
     i18n('user.fields.role'),
   ),
   status: yupFilterSchemas.enumerator(
@@ -52,7 +52,7 @@ const previewRenders = {
     label: i18n('user.fields.email'),
     render: filterRenders.generic(),
   },
-  role: {
+  roles: {
     label: i18n('user.fields.role'),
     render: (value) =>
       value ? i18n(`roles.${value}.label`) : null,
@@ -66,7 +66,7 @@ const previewRenders = {
 const emptyValues = {
   fullName: null,
   email: null,
-  role: null,
+  roles: null,
   status: null,
 };
 
@@ -164,7 +164,7 @@ function UserFilter(props) {
                 </Grid>
                 <Grid item lg={6} xs={12}>
                   <SelectFormItem
-                    name={'role'}
+                    name={'roles'}
                     label={i18n('user.fields.role')}
                     options={userEnumerators.roles.map(
                       (value) => ({

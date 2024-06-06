@@ -127,19 +127,6 @@ export default class UserRepository {
       options,
     );
 
-    await AuditLogRepository.log(
-      {
-        entityName: 'user',
-        entityId: id,
-        action: AuditLogRepository.UPDATE,
-        values: {
-          id,
-          password: 'secret',
-        },
-      },
-      options,
-    );
-
     return this.findById(id, {
       ...options,
       bypassPermissionValidation: true,
@@ -202,20 +189,6 @@ export default class UserRepository {
       options,
     );
 
-    await AuditLogRepository.log(
-      {
-        entityName: 'user',
-        entityId: id,
-        action: AuditLogRepository.UPDATE,
-        values: {
-          id,
-          emailVerificationToken,
-          emailVerificationTokenExpiresAt,
-        },
-      },
-      options,
-    );
-
     return emailVerificationToken;
   }
 
@@ -243,20 +216,6 @@ export default class UserRepository {
         passwordResetToken,
         passwordResetTokenExpiresAt,
         updatedBy: currentUser.id,
-      },
-      options,
-    );
-
-    await AuditLogRepository.log(
-      {
-        entityName: 'user',
-        entityId: id,
-        action: AuditLogRepository.UPDATE,
-        values: {
-          id,
-          passwordResetToken,
-          passwordResetTokenExpiresAt,
-        },
       },
       options,
     );
