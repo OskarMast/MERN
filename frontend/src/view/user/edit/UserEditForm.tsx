@@ -20,9 +20,7 @@ import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 import formActions from 'src/modules/form/formActions';
 
 const schema = yup.object().shape({
-  roles: yupFormSchemas.stringArray(
-    i18n('user.fields.roles'),
-  ),
+  roles: yupFormSchemas.string(i18n('user.fields.roles')),
 });
 
 function UserEditForm(props) {
@@ -43,7 +41,6 @@ function UserEditForm(props) {
       id: props.user.id,
       ...values,
     };
-    delete data.email;
     dispatch(actions.doUpdate(data));
   };
 
@@ -87,7 +84,7 @@ function UserEditForm(props) {
                     label: i18n(`roles.${value}.label`),
                   }),
                 )}
-                mode="multiple"
+                mode="single"
                 variant="standard"
               />
             </Grid>
