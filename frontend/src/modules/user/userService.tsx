@@ -84,7 +84,7 @@ export default class UserService {
     };
 
     const tenantId = AuthCurrentTenant.get();
-
+    console.log(tenantId);
     const response = await authAxios.get(
       `/tenant/${tenantId}/user`,
       {

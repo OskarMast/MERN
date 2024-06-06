@@ -6,7 +6,6 @@ import {
   menus,
   profileRoutes,
   tenantRoutes,
-  planRoutes,
 } from 'src/view/menus';
 
 import { useEffect, useState } from 'react';
@@ -543,8 +542,7 @@ function Menu({
                     ].includes(config.tenantMode)
                       ? tenantRoutes
                       : [],
-                  )
-                  .concat([...planRoutes]),
+                  ),
               },
               { type: 'divider', key: 'divider-0' },
               ...menus,

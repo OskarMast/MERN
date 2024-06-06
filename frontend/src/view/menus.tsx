@@ -45,21 +45,9 @@ const tenantRoutes = [
 
 const userRoutes = [].filter(Boolean);
 
-const planRoutes = [
-  config.isPlanEnabled && {
-    path: '/admin/plan',
-    permissionRequired: permissions.planRead,
-    icon: (
-      <Icon fontSize="medium">credit_card_outlined</Icon>
-    ),
-    name: i18n('plan.menu'),
-  },
-].filter(Boolean);
-
 export {
   menus,
   profileRoutes,
   tenantRoutes,
   userRoutes,
-  planRoutes,
 };

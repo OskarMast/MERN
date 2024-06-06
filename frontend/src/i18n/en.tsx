@@ -125,17 +125,9 @@ const en = {
       label: 'Admin',
       description: 'Full access to all resources',
     },
-    manager: {
-      label: 'Manager',
-      description: 'Manager access',
-    },
-    student: {
-      label: 'Student',
-      description: 'Student access',
-    },
-    teacher: {
-      label: 'Teacher',
-      description: 'Teacher access',
+    user: {
+      label: 'User',
+      description: 'User access',
     },
   },
 

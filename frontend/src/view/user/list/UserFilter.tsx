@@ -175,19 +175,6 @@ function UserFilter(props) {
                     variant="standard"
                   />
                 </Grid>
-                <Grid item lg={6} xs={12}>
-                  <SelectFormItem
-                    name={'status'}
-                    label={i18n('user.fields.status')}
-                    options={userEnumerators.status.map(
-                      (value) => ({
-                        value,
-                        label: i18n(`user.status.${value}`),
-                      }),
-                    )}
-                    variant="standard"
-                  />
-                </Grid>
               </Grid>
               <FilterButtons>
                 <MDButton

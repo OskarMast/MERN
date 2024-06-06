@@ -66,49 +66,6 @@ const privateRoutes = [
   },
 
   {
-    path: '/admin/tenant',
-    collapseName: 'my-profile',
-    i18n: 'tenant.list.title',
-    parent: '/admin/person-name-breadcrumb',
-    loader: () =>
-      import('src/view/tenant/list/TenantListPage'),
-    permissionRequired: null,
-    exact: true,
-  },
-
-  {
-    path: '/admin/tenant/new',
-    collapseName: 'my-profile',
-    i18n: 'tenant.new.title',
-    parent: '/admin/tenant',
-    loader: () =>
-      import('src/view/tenant/form/TenantFormPage'),
-    permissionRequired: null,
-    exact: true,
-  },
-
-  {
-    path: '/admin/tenant/:id/edit',
-    collapseName: 'my-profile',
-    i18n: 'tenant.edit.title',
-    parent: '/admin/tenant',
-    loader: () =>
-      import('src/view/tenant/form/TenantFormPage'),
-    permissionRequired: null,
-    exact: true,
-  },
-
-  config.isPlanEnabled && {
-    path: '/admin/plan',
-    i18n: 'plan.title',
-    collapseName: 'my-profile',
-    parent: '/admin/person-name-breadcrumb',
-    loader: () => import('src/view/plan/PlanPage'),
-    permissionRequired: permissions.planRead,
-    exact: true,
-  },
-
-  {
     path: '/admin/user',
     i18n: 'user.menu',
     parent: '/admin',

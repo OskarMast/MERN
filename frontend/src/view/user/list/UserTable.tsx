@@ -194,14 +194,12 @@ function UserTable() {
                     {row.fullName}
                   </DataTableBodyCell>
                   <DataTableBodyCell>
-                    {row.roles.map((roleId) => (
                       <MDBadgeDot
-                        key={roleId}
-                        badgeContent={Roles.labelOf(roleId)}
+                        key={row.roles}
+                        badgeContent={Roles.labelOf(row.roles)}
                         color={sidenavColor}
                         variant="contained"
                       />
-                    ))}
                   </DataTableBodyCell>
                   <DataTableBodyCell>
                     <UserStatusView value={row.status} />

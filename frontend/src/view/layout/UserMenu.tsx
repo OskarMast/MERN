@@ -52,15 +52,15 @@ function UserMenu({
   };
 
   const doNavigateToProfile = () => {
-    getHistory().push('/admin//profile');
+    getHistory().push('/admin/profile');
   };
 
   const doNavigateToPasswordChange = () => {
-    getHistory().push('/admin//password-change');
+    getHistory().push('/admin/password-change');
   };
 
   const doNavigateToTenants = () => {
-    getHistory().push('/admin//tenant');
+    getHistory().push('/admin/tenant');
   };
 
   const { transparentNavbar, darkMode } =
