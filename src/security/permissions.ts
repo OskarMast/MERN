@@ -1,3 +1,4 @@
+import dashboardImport from '../api/dashboard/dashboardImport';
 import Plans from './plans';
 import Roles from './roles';
 import Storage from './storage';
@@ -129,6 +130,15 @@ class Permissions {
           storage.settingsBackgroundImages,
           storage.settingsLogos,
           storage.settingsPhotographs,
+        ],
+      },
+      dashboardImport: {
+        id: 'dashboardImport',
+        allowedRoles: [roles.admin],
+        allowedPlans: [
+          plans.free,
+          plans.growth,
+          plans.enterprise,
         ],
       },
     };
