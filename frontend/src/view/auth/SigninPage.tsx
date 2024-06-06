@@ -94,13 +94,7 @@ function SigninPage(): JSX.Element {
   };
 
   return (
-    <BasicLayout
-      image={
-        backgroundImageUrl
-          ? backgroundImageUrl
-          : '/images/bg-sign-in.jpg'
-      }
-    >
+    <BasicLayout image={bgImage}>
       <Card>
         <GradientTitle>
           <MDBox
